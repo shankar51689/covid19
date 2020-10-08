@@ -23,8 +23,6 @@ l=[]
 for l in data_set:
     l.append(int(i[1][:7].replace('\xa0',' ')))
 l.append(sum(l))
-l
-
       
 #-------------------------------make a pie chart-------------------------
 
@@ -36,6 +34,9 @@ ldf=pd.DataFrame(l)
 print(ldf)'''
 
 temp= 1[:3]
+print(l)
+
+temp=l[:3]
 print(temp)
 plt.pie(x=temp,labels=['Active_Case','Recovery','Death'],wedgeprops={'linewidth':1,'edgecolor':'k'},autopct='%.2f',explode=(0,0,1))
 plt.show()
@@ -52,7 +53,7 @@ def data_maintain():
             data=data.append(new_data,ignore_index=True,sort=False)
             data.to_excel('covid19.xlsx',index=False)
         else:
-            print('Todays data already saved')
+            print('Todays data already saved please check again')
     except FileNotFoundError:
         df.to_excel('covid19.xlsx',index=False)
         data=pd.read_excel('covid19.xlsx')
@@ -63,11 +64,14 @@ data_maintain()
               
 #----------------------------plot a graph to show the growth rate---------------------------
 
+data=pd.read_excel('covid19.xlsx')
+print(data.tail())
+
 def rating():
     try:
 
         #remain=data.Confirmed-(data.Recoverd+data.Death)
-        plt.figure(figsize=(30,10))
+        plt.figure(figsize=(25,10))
         plt.title('Covid-19 Growth Rating')
         plt.plot(data.Date,data.Confirmed,marker='o',color='orange',markeredgecolor='k')
         plt.plot(data.Date,data.Death,marker='o',color='red',markeredgecolor='k')
@@ -80,6 +84,17 @@ def rating():
         for index,y in enumerate(data['Death']):
             plt.text(index,y,str(y),fontsize=13)
         for index,y in enumerate(remain):
+        plt.plot(data.Date.tail(8),data.Confirmed.tail(8),marker='o',color='orange',markeredgecolor='k')
+        plt.plot(data.Date.tail(8),data.Death.tail(8),marker='o',color='red',markeredgecolor='k')
+        plt.plot(data.Date.tail(8),data.Recoverd.tail(8),marker='o',color='green',markeredgecolor='k')
+        plt.plot(data.Date.tail(8),data['Active Cases'].tail(8),marker='o',markeredgecolor='k')
+        for index,y in enumerate(data['Recoverd'].tail(8)):
+            plt.text(index,y,str(y),fontsize=13)
+        for index,y in enumerate(data['Confirmed'].tail(8)):
+            plt.text(index,y,str(y),fontsize=13)
+        for index,y in enumerate(data['Death'].tail(8)):
+            plt.text(index,y,str(y),fontsize=13)
+        for index,y in enumerate(data['Active Cases'].tail(8)):
             plt.text(index,y,str(y),fontsize=13)
         '''
         plt.show()
