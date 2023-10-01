@@ -8,12 +8,14 @@ import time as t
 data=req.get('https://www.mohfw.gov.in/').text
 soap=bs4.BeautifulSoup(data,'html.parser')
 table=soap.find_all('li')
+
 def seprateing(r):
     table_list=[]
     for i in r:
         table_list.append(i.text.replace('\n',''))
         #print(i.text.replace('\ n',''))
     return table_list
+
 data_set = []
 for row in table:
     a= separating(row.find_all('strong',attrs=('class':"mob-hide")))
